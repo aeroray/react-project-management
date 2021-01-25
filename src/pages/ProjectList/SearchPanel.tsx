@@ -1,4 +1,18 @@
-export const SearchPanel = ({ users, params, setParams }) => {
+import { FC } from "react";
+
+import { User } from "./types";
+
+interface SearchPanelProps {
+  users: User[];
+  params: { name: string; userId: string };
+  setParams: (params: SearchPanelProps["params"]) => void;
+}
+
+export const SearchPanel: FC<SearchPanelProps> = ({
+  users,
+  params,
+  setParams,
+}) => {
   return (
     <form>
       <div>

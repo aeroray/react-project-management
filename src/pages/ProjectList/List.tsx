@@ -1,4 +1,13 @@
-export const List = ({ list, users }) => {
+import { FC } from "react";
+
+import { Project, User } from "./types";
+
+interface ListProps {
+  list: Project[];
+  users: User[];
+}
+
+export const List: FC<ListProps> = ({ list, users }) => {
   return (
     <table>
       <thead>

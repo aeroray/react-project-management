@@ -1,6 +1,6 @@
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
-export const cleanEmpty = (object) => {
+export const cleanEmpty = (object: any) => {
   const copy = { ...object };
   Object.keys(copy).forEach((key) => {
     const value = copy[key];
