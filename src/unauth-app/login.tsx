@@ -1,21 +1,12 @@
 import { FormEvent, useState } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL;
+import { useAuthCtx } from "hooks/useAuthCtx";
 
-const Login = () => {
+export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = (formData: { username: string; password: string }) => {
-    fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    }).then(async (res) => {
-      if (res.ok) {
-      }
-    });
-  };
+  const { login, user } = useAuthCtx();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +15,7 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {user && <p>登录成功，用户名：{user?.name}</p>}
       <div>
         <label htmlFor="username">用户名</label>
         <input
@@ -46,5 +38,3 @@ const Login = () => {
     </form>
   );
 };
-
-export default Login;
