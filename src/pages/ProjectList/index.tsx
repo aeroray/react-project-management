@@ -6,28 +6,23 @@ import { SearchPanel } from "./SearchPanel";
 
 import { cleanEmpty } from "utils";
 import { useDebounce } from "hooks/useDebounce";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { useHttp } from "hooks/useHttp";
 
 const ProjectList = () => {
   const [params, setParams] = useState({ name: "", userId: "" });
   const [list, setList] = useState([]);
   const [users, setUsers] = useState([]);
 
+  const client = useHttp();
+
   const debouncedParams = useDebounce(params, 200);
 
   useEffect(() => {
-    fetch(
-      `${API_URL}/projects?${qs.stringify(cleanEmpty(debouncedParams))}`
-    ).then(async (res) => {
-      res.ok && setList(await res.json());
-    });
+    client("projects", { data: cleanEmpty(debouncedParams) }).then(setList);
   }, [debouncedParams]);
 
   useEffect(() => {
-    fetch(`${API_URL}/users`).then(async (res) => {
-      res.ok && setUsers(await res.json());
-    });
+    client("users").then(setUsers);
   }, []);
 
   return (
